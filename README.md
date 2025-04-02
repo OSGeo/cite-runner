@@ -1,30 +1,30 @@
 # cite-runner
 
-Simplify testing your OGC implementation server against [CITE](https://github.com/opengeospatial/cite/wiki). This repo
-contains a CITE runner that can be called as a github action. It can also be used standalone, which allows integration
-with other CI platforms or running locally.
+Simplify testing your OGC implementation server against [CITE](https://github.com/opengeospatial/cite/wiki). This
+repository contains a CITE runner that can be called as a github action. It can also be used standalone, which allows
+integration with other CI platforms or running locally.
 
 This code can either:
 
-- Spin up a docker container with the [ogc teamengine image](https://hub.docker.com/r/ogccite/teamengine-production),
+- Spin up a docker container with the [OGC TeamEngine image](https://hub.docker.com/r/ogccite/teamengine-production),
   running test suites in an isolated CI environment
-- Use an existing teamengine deployment
+- Use an existing TeamEngine deployment
 
 
-## Running as a github action
+## Running as a GitHub action
 
 ### Inputs
 
 This action expects the following inputs to be provided:
 
-- `test_suite_identfier` - Identifier of the test suite to be executed. Test suite identifiers can be gotten from the
+- `test_suite_identifier` - Identifier of the test suite to be executed. Test suite identifiers can be gotten from the
   documentation at <http://cite.opengeospatial.org/teamengine/>. Example:
 
   ```yaml
   test_suite_identifier: 'ogcapi-features-1.0'
   ```
 
-- `test_session_arguments` - Test session arguments to be passed to teamengine. These depend on the test suite that is
+- `test_session_arguments` - Test session arguments to be passed to TeamEngine. These depend on the test suite that is
   going to be executed. Must be provided as a space-separated list of `key=value` pairs. Examples:
 
   - A simple yaml string
@@ -40,17 +40,17 @@ This action expects the following inputs to be provided:
       noofcollections=-1
     ```
 
-- `teamengine_url` - **OPTIONAL** - URL of the teamengine instance to be used for running tests. If this parameter
-  is not specified then the action will spin up a local teamengine docker container and use it for testing. If you
-  specify a custom teamengine URL this action will also try to find authentication-related env variables and use
-  them. These env variables must be named `teamengine_username` and `teamengine_password`
+- `teamengine_url` - **OPTIONAL** - URL of the TeamEngine instance to be used for running tests. If this parameter
+  is not specified then the action will spin up a local TeamEngine docker container and use it for testing. If you
+  specify a custom TeamEngine URL this action will also try to find authentication-related environment variables and
+  use them. These environment variables must be named `teamengine_username` and `teamengine_password`
 
-  That the value of this paramenter must be the URL of the landing page of the teamengine service, which usually is
+  Note that the value of this parameter must be the URL of the landing page of the TeamEngine service, which usually is
   located at the `/teamengine` path. Examples:
 
   - When spinning up a local docker instance there is no need to supply this argument
 
-  - When using the remote teamengine instance located at `https://my-server` with a pre-existing user `myself` and
+  - When using the remote TeamEngine instance located at `https://my-server` with a pre-existing user `myself` and
     a password of `something`:
 
     ```yaml
@@ -59,11 +59,11 @@ This action expects the following inputs to be provided:
     teamengine_password: 'something'
     ```
 
-- `teamengine_username` - **OPTIONAL** - Username to be used when logging in to a remote teamengine instance.
-  Defaults to `ogctest`, which is a user that is pre-created on the official teamengine docker image.
+- `teamengine_username` - **OPTIONAL** - Username to be used when logging in to a remote TeamEngine instance.
+  Defaults to `ogctest`, which is a user that is pre-created on the official TeamEngine docker image.
 
-- `teamengine_password` - **OPTIONAL** - Password to be used when logging in to a remote teamengine instance.
-  Defaults to `ogctest`, which is the password used for the pre-created user on the official teamengine docker image
+- `teamengine_password` - **OPTIONAL** - Password to be used when logging in to a remote TeamEngine instance.
+  Defaults to `ogctest`, which is the password used for the pre-created user on the official TeamEngine docker image
 
 - `treat_skipped_tests_as_failures` - **OPTIONAL** - Whether the presence of skipped tests should be interpreted as
   an overall failure of the test suite or not. Defaults to `false`
@@ -72,7 +72,7 @@ This action expects the following inputs to be provided:
 
 ### Usage
 
-The below examples define a github workflow for testing pygeoapi.
+The below examples define a GitHub workflow for testing pygeoapi.
 
 Simple usage, running the `ogcapi-features-1.0` test suite whenever there is a `push`:
 
@@ -184,7 +184,7 @@ This action's code can also be installed locally:
 
 - Start your service to be tested. Let's assume it is already running on `http://localhost:5000`
 
-- Run the teamengine docker image locally:
+- Run the TeamEngine docker image locally:
 
   ```shell
   docker run \
@@ -201,7 +201,7 @@ This action's code can also be installed locally:
   ```
 
 There are additional commands and options which can be used when running locally, which allow controlling the output
-format and how the inputs are supplied. Read the online
+format and how the inputs are supplied. Read the online documentation for more details.
 
 
 ## Test suites which are known to work
@@ -262,20 +262,20 @@ format and how the inputs are supplied. Read the online
 
 ## Development
 
-After having clone this repo, install the code with dev dependencies by running:
+After having clone this repository, install the code with dev dependencies by running:
 
 ```shell
 poetry install --with dev
 ```
 
-Enable the pre-commit hooks by running
+Enable the pre-commit hooks by running:
 
 ```shell
 poetry run pre-commit install
 ```
 
 Optionally, do a first run of pre-commit on all files, which will also initialize
-pre-commit's hooks
+pre-commit's hooks:
 
 ```shell
 poetry run pre-commit run --all-files
