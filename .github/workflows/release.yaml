@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+env:
+  COLUMNS: 120
+
+jobs:
+  call_run_ci:
+    uses: ./.github/workflows/ci.yaml
+
+  release:
+    needs: call_run_ci
+    runs-on: ubuntu-24.04
+    permissions:
+      id-token: write
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/cite-runner
+    steps:
+      - name: "Download artifact"
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.call_run_ci.outputs.artifact_name }}
+          path: dist
+      - name: "Publish to testpypi"
+        uses: pypa/gh-action-pypi-publish@v1.12.4
+        with:
+          attestations: "true"
+          repository-url: "https://test.pypi.org/legacy/"
+      - name: "Create GitHub release"
+        uses: softprops/action-gh-release@v2.2.1
+        with:
+          files: dist/*
