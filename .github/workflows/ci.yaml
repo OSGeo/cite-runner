@@ -1,19 +1,34 @@
 name: Continuous Integration
 
 on:
-  push:  # will run both when pushing a branch and when pushing a tag
+  # will run both when pushing a branch and when pushing a tag
+  push:
 
   pull_request:
+
+  # will run when called from another workflow
+  workflow_call:
+    outputs:
+      artifact_name:
+        description: "Name of the artifact containing the build package"
+        value: ${{ jobs.run_ci.outputs.artifact_name }}
+
 
 env:
   COLUMNS: 120
 
 jobs:
-  run-ci:
+  run_ci:
     runs-on: ubuntu-24.04
+    env:
+      ARTIFACT_NAME: "python-package"
+    outputs:
+      artifact_name: ${{ env.ARTIFACT_NAME }}
     steps:
       - name: "Grab code"
         uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: "0"
 
       - name: "Install uv"
         uses: astral-sh/setup-uv@v5
@@ -38,3 +53,14 @@ jobs:
 
       - name: "Run tests"
         run: uv run pytest
+
+      - name: "Build Python package"
+        run: uv build
+
+      - name: "Upload built package as artifact"
+        id: upload_package_artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: "${{ env.ARTIFACT_NAME }}"
+          path: dist/
+          retention-days: 2

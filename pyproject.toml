@@ -1,10 +1,12 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
+dynamic = [
+    "version"
+]
 name = "cite-runner"
-version = "0.1.0"
 description = "A runner for OGC CITE test suites"
 license = "MIT"
 license-files = [
@@ -75,3 +77,12 @@ name = "testpypi"
 url = "https://test.pypi.org/simple/"
 publish-url = "https://test.pypi.org/legacy/"
 explicit = true
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.version.raw-options]
+version_scheme = "python-simplified-semver"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "_version.py"
