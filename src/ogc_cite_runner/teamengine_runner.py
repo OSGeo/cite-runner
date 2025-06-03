@@ -28,7 +28,7 @@ class SuiteSerializerProtocol(typing.Protocol):
         self,
         suite_result: models.TestSuiteResult,
         serialization_details: models.SerializationDetails,
-        context: config.CiteRunnerContext,
+        context: config.OGCCiteRunnerContext,
     ) -> RenderableType: ...
 
 
@@ -86,14 +86,14 @@ def execute_test_suite(
     try:
         response.raise_for_status()
     except httpx.HTTPError as exc:
-        raise exceptions.CiteRunnerException("Could not execute test suite") from exc
+        raise exceptions.OGCCiteRunnerException("Could not execute test suite") from exc
     else:
         return response.text
 
 
 def parse_test_suite_result(
     raw_result: str,
-    settings: config.CiteRunnerSettings,
+    settings: config.OGCCiteRunnerSettings,
     test_suite_identifier: str | None = None,
 ) -> models.TestSuiteResult:
     root_element = _parse_raw_result_as_xml(raw_result)
@@ -107,7 +107,7 @@ def serialize_suite_result(
     parsed_suite_result: models.TestSuiteResult,
     output_format: models.OutputFormat,
     serialization_details: models.SerializationDetails,
-    context: config.CiteRunnerContext,
+    context: config.OGCCiteRunnerContext,
 ) -> str:
     serializer: SuiteSerializerProtocol = _get_suite_result_serializer(
         output_format, context.settings, parsed_suite_result.suite_title
@@ -136,7 +136,7 @@ def _load_python_object(
 
 def _get_suite_result_serializer(
     output_format: models.OutputFormat,
-    settings: config.CiteRunnerSettings,
+    settings: config.OGCCiteRunnerSettings,
     test_suite_identifier: str | None = None,
 ) -> SuiteSerializerProtocol:
     serializer_python_path = {
@@ -170,7 +170,7 @@ def _get_suite_result_serializer(
 
 
 def _get_suite_result_parser(
-    settings: config.CiteRunnerSettings,
+    settings: config.OGCCiteRunnerSettings,
     test_suite_identifier: str | None = None,
 ) -> SuiteParserProtocol:
     parser_python_path = settings.default_parser
@@ -196,7 +196,7 @@ def _parse_raw_result_as_xml(raw_result: str) -> etree.Element:
     try:
         return etree.fromstring(raw_result.encode(), parser)
     except etree.ParseError as exc:
-        raise exceptions.CiteRunnerException(
+        raise exceptions.OGCCiteRunnerException(
             "Unable to parse test suite execution result as XML"
         ) from exc
 

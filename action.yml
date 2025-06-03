@@ -75,7 +75,7 @@ runs:
       uses: actions/setup-python@v5
       with:
         python-version-file: "${{ github.action_path }}/pyproject.toml"
-    - name: "Install cite-runner"
+    - name: "Install ogc-cite-runner"
       env:
 #        GITHUB_CONTEXT: ${{ toJSON(github) }}
 #        ENV_CONTEXT: ${{ toJSON(env) }}
@@ -95,13 +95,13 @@ runs:
         --add-host=host.docker.internal:host-gateway
         --publish 9080:8080
         ogccite/teamengine-production:1.0-SNAPSHOT
-    - name: "Run cite-runner"
+    - name: "Run ogc-cite-runner"
       id: "run_cite_runner"
       shell: "bash --noprofile --norc -o pipefail {0}"
       run: |
         cd ${{ github.action_path }}
         RAW_PATH=raw-result.xml
-        uv run cite-runner \
+        uv run ogc-cite-runner \
             --network-timeout=${{ inputs.network_timeout_seconds }} \
             execute-test-suite-from-github-actions \
             ${{ inputs.teamengine_url || 'http://localhost:9080/teamengine' }} \
@@ -115,8 +115,8 @@ runs:
             exit 1
         fi
         echo "RAW_RESULT_OUTPUT_PATH=${{ steps.normalize_action_path.outputs.ACTION_NORMALIZED_PATH }}/${RAW_PATH}" >> "${GITHUB_OUTPUT}"
-        echo "::group::cite-runner suite execution results"
-        uv run cite-runner parse-result \
+        echo "::group::ogc-cite-runner suite execution results"
+        uv run ogc-cite-runner parse-result \
             --output-format console \
             ${{ fromJSON(inputs.exit_with_error) && '--exit-with-error \' || '--exit-without-error \'}}
             --with-summary \
@@ -127,7 +127,7 @@ runs:
         echo "CITE_RUNNER_EXIT_CODE=$?" >> "${GITHUB_OUTPUT}"
         echo "::endgroup::"
         MARKDOWN_PATH=test-result.md
-        uv run cite-runner parse-result \
+        uv run ogc-cite-runner parse-result \
             --output-format markdown \
             --with-summary \
             ${{ fromJSON(inputs.with_failed) && '--with-failed \' || '--without-failed \'}}
@@ -136,7 +136,7 @@ runs:
             ${RAW_PATH} 1> ${MARKDOWN_PATH}
         cat ${MARKDOWN_PATH} >> ${GITHUB_STEP_SUMMARY}
         echo "MARKDOWN_RESULT_OUTPUT_PATH=${{ steps.normalize_action_path.outputs.ACTION_NORMALIZED_PATH }}/${MARKDOWN_PATH}" >> "${GITHUB_OUTPUT}"
-        echo "JSON_REPORT=$(uv run cite-runner parse-result \
+        echo "JSON_REPORT=$(uv run ogc-cite-runner parse-result \
             --output-format json \
             ${RAW_PATH}
         )" >> "${GITHUB_OUTPUT}"

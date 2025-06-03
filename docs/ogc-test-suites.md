@@ -5,7 +5,7 @@ hide:
 
 # Known test suite parameters
 
-The following table lists known suite identifiers and input parameters which can be used with cite-runner.
+The following table lists known suite identifiers and input parameters which can be used with ogc-cite-runner.
 Consult each suite's documentation page for more information. Also, feel free to [open an issue] for filling in
 missing information or suggesting the addition of new suites.
 
@@ -199,4 +199,4 @@ The official [OGC TEAM Engine documentation] also provides a list of test suites
 </table>
 
 [OGC TEAM Engine documentation]: https://cite.opengeospatial.org/teamengine/
-[open an issue]: https://github.com/OSGeo/cite-runner/issues
+[open an issue]: https://github.com/OSGeo/ogc-cite-runner/issues

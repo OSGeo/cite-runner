@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 dynamic = [
     "version"
 ]
-name = "cite-runner"
+name = "ogc-cite-runner"
 description = "A runner for OGC CITE test suites"
 license = "MIT"
 license-files = [
@@ -42,13 +42,13 @@ dependencies = [
 ]
 
 [project.urls]
-homepage = "https://osgeo.github.io/cite-runner/"
-repository = "https://github.com/OSGeo/cite-runner"
-documentation = "https://osgeo.github.io/cite-runner/"
-"Bug Tracker" = "https://github.com/OSGeo/cite-runner/issues"
+homepage = "https://osgeo.github.io/ogc-cite-runner/"
+repository = "https://github.com/OSGeo/ogc-cite-runner"
+documentation = "https://osgeo.github.io/ogc-cite-runner/"
+"Bug Tracker" = "https://github.com/OSGeo/ogc-cite-runner/issues"
 
 [project.scripts]
-cite-runner = "cite_runner.main:app"
+ogc-cite-runner = "cite_runner.main:app"
 
 [dependency-groups]
 dev = [

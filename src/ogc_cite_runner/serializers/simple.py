@@ -9,7 +9,7 @@ from .. import (
 def to_markdown(
     parsed_result: models.TestSuiteResult,
     serialization_details: models.SerializationDetails,
-    context: config.CiteRunnerContext,
+    context: config.OGCCiteRunnerContext,
 ) -> str:
     """Serialize parsed test suite results to markdown"""
     template = context.jinja_environment.get_template(
@@ -26,11 +26,11 @@ def to_markdown(
 def to_json(
     parsed_result: models.TestSuiteResult,
     serialization_details: models.SerializationDetails,
-    context: config.CiteRunnerContext,
+    context: config.OGCCiteRunnerContext,
 ) -> str:
     serialized = parsed_result.model_dump_json(warnings="error")
     reparsed = json.loads(serialized)
-    reparsed["cite_runner"] = {
+    reparsed["ogc_cite_runner"] = {
         "disclaimer": context.settings.disclaimer,
         "url": context.settings.docs_url,
     }

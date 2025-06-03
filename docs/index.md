@@ -1,5 +1,5 @@
 ---
-title: cite-runner
+title: ogc-cite-runner
 hide:
   - navigation
 ---
@@ -11,7 +11,7 @@ hide:
 </style>
 
 <figure markdown="span">
-  ![cite-runner-logo](assets/cite-runner-logo.svg)
+  ![ogc-cite-runner-logo](assets/ogc-cite-runner-logo.svg)
 </figure>
 
 A test runner for [OGC CITE:material-open-in-new:]{: target="blank_" }.
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: test ogcapi-features compliancy
-        uses: OSGeo/cite-runner@v0.2.0
+        uses: OSGeo/ogc-cite-runner@v0.2.0
         with:
           test_suite_identifier: ogcapi-features-1.0
           test_session_arguments: iut=http://localhost:5001
@@ -56,9 +56,9 @@ docker run \
     --network=host \
     ogccite/teamengine-production:1.0-SNAPSHOT
 
-pipx install cite-runner
+pipx install ogc-cite-runner
 
-cite-runner execute-test-suite \
+ogc-cite-runner execute-test-suite \
     http://localhost:8080/teamengine \
     ogcapi-features-1.0 \
     --test-suite-input iut http://localhost:5001
@@ -67,7 +67,7 @@ cite-runner execute-test-suite \
 
 ## License
 
-cite-runner is published under an [MIT license:material-open-in-new:]{: target="blank_" }.
+ogc-cite-runner is published under an [MIT license:material-open-in-new:]{: target="blank_" }.
 
 
-[MIT license:material-open-in-new:]: https://github.com/OSGeo/cite-runner/blob/main/LICENSE
+[MIT license:material-open-in-new:]: https://github.com/OSGeo/ogc-cite-runner/blob/main/LICENSE

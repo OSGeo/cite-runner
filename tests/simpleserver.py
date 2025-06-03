@@ -1,7 +1,7 @@
 """A simple HTTP server for testing CITE runner's GitHub action.
 
 This is a server that purposedly does not fully implement OGC API Features. The
-intention is to use this to test cite-runner's ability to be called as a GitHub action.
+intention is to use this to test ogc-cite-runner's ability to be called as a GitHub action.
 """
 
 import argparse
@@ -141,7 +141,7 @@ class OgcApiRequestHandler(Protocol):
     ) -> tuple[int, dict[str, str], bytes]: ...
 
 
-class CiteRunnerApiFeaturesHandler(BaseHTTPRequestHandler):
+class OGCCiteRunnerApiFeaturesHandler(BaseHTTPRequestHandler):
     catalog: DataCatalog
 
     def do_GET(self):
@@ -276,13 +276,13 @@ def get_collection(
 
 
 def main(bind_address: str, port: int):
-    CiteRunnerApiFeaturesHandler.catalog = DataCatalog(
+    OGCCiteRunnerApiFeaturesHandler.catalog = DataCatalog(
         title="Simple server",
-        description="A basic OGC API Features server, built for testing cite-runner as a GitHub Action.",
+        description="A basic OGC API Features server, built for testing ogc-cite-runner as a GitHub Action.",
     )
-    logger.info(f"Launching {CiteRunnerApiFeaturesHandler.catalog.title!r}...")
+    logger.info(f"Launching {OGCCiteRunnerApiFeaturesHandler.catalog.title!r}...")
     logger.info(f"Listening on http://{bind_address}:{port}")
-    httpd = HTTPServer((bind_address, port), CiteRunnerApiFeaturesHandler)
+    httpd = HTTPServer((bind_address, port), OGCCiteRunnerApiFeaturesHandler)
     httpd.serve_forever()
 
 

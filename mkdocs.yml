@@ -6,8 +6,8 @@ nav:
   - Development: development.md
 
 site_name: CITE Runner
-site_url: https://osgeo.github.io/cite-runner
-repo_url: https://github.com/OSGeo/cite-runner
+site_url: https://osgeo.github.io/ogc-cite-runner
+repo_url: https://github.com/OSGeo/ogc-cite-runner
 markdown_extensions:
   - admonition
   - attr_list
@@ -24,8 +24,8 @@ markdown_extensions:
       permalink: true
 theme:
   name: material
-  logo: assets/cite-runner-logo-no-text-small.svg
-  favicon: assets/cite-runner-logo-no-text-small.svg
+  logo: assets/ogc-cite-runner-logo-no-text-small.svg
+  favicon: assets/ogc-cite-runner-logo-no-text-small.svg
   palette:
     primary: custom
     accent: custom

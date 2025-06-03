@@ -18,7 +18,7 @@ from .. import (
 def to_console(
     parsed_result: models.TestSuiteResult,
     serialization_details: models.SerializationDetails,
-    context: config.CiteRunnerContext,
+    context: config.OGCCiteRunnerContext,
 ) -> Group:
     overview_message = Text(
         f"Test suite has {'passed 🏅' if parsed_result.passed else 'failed ❌'}"

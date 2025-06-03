@@ -1,4 +1,4 @@
-from cite_runner.parsers import earl
+from ogc_cite_runner.parsers import earl
 
 
 def test_parse_test_suite_result_ogcapi_features_1_0(

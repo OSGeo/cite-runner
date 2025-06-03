@@ -1,4 +1,4 @@
-name: Test cite-runner as a GitHub action
+name: Test ogc-cite-runner as a GitHub action
 
 on:
   # will run both when pushing a branch and when pushing a tag
@@ -13,7 +13,7 @@ env:
   COLUMNS: 120
 
 jobs:
-  test_cite_runner_github_action:
+  test_ogc_cite_runner_github_action:
     runs-on: ubuntu-24.04
     env:
       SIMPLESERVER_PORT: 9092
@@ -35,17 +35,17 @@ jobs:
               echo "simpleserver failed to start"
               exit 1
           fi
-      - name: "Test cite-runner GitHub action"
-        id: test_cite_runner_github_action
+      - name: "Test ogc-cite-runner GitHub action"
+        id: test_ogc_cite_runner_github_action
         uses: ./
         with:
           test_suite_identifier: ogcapi-features-1.0
           test_session_arguments: iut=http://host.docker.internal:${{ env.SIMPLESERVER_PORT }}
           exit_with_error: "false"
-      - name: "Verify cite-runner results"
+      - name: "Verify ogc-cite-runner results"
         run: |
           jq '.' <<EOF | python tests/github_action_tests.py -
-          ${{ steps.test_cite_runner_github_action.outputs.json_report }}
+          ${{ steps.test_ogc_cite_runner_github_action.outputs.json_report }}
           EOF
       - name: "Shut down simple test server"
         if: always()

@@ -20,7 +20,7 @@ jobs:
       contents: write
     environment:
       name: pypi
-      url: https://pypi.org/p/cite-runner
+      url: https://pypi.org/p/ogc-cite-runner
     steps:
       - name: "Grab code"
         uses: actions/checkout@v4.2.2
